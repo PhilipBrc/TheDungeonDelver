@@ -10,19 +10,26 @@ public class InkManager : MonoBehaviour
     CharacterManager cm;
     GameManager gm;
     string currentStory;
+    static int stuff;
+    public SkillManager skillz;
     void Start()
     {
+        stuff = 0;
         cm = GetComponent<CharacterManager>();
         gm = GetComponent<GameManager>();
         // Remove the default message
         RemoveChildren();
         StartStory();
     }
-
     // Creates a new Story object with the compiled story which we can then play!
     void StartStory()
     {
         story = new Story(inkJSONAsset.text);
+        story.BindExternalFunction("setGold", (int x) =>
+         {
+             skillz.setGold(x);
+             Debug.Log("Gold: "+skillz.getGold());
+         });
         story.BindExternalFunction("place_actors", (string leftName, string rightName) =>
          {
              cm.PlaceActors(leftName, rightName);
@@ -181,6 +188,8 @@ public class InkManager : MonoBehaviour
         PlayerPrefs.DeleteKey("inkSaveState");
         story.ResetState();
     }
+
+
 
 
     [SerializeField]

@@ -1,7 +1,5 @@
-VAR torches = 0
+EXTERNAL setGold(int x)
 VAR gold = 0
-VAR weapon = 0
-VAR time = 0
 -> TheStart
 === TheStart
 The light ahead of the tunnel shines bright, looking forward causes your eyes to adjust
@@ -16,7 +14,6 @@ You face a path, the right path seems to lead to a dark woods, while the left go
     ** Look around.
         You look around and see a glint come off from where of the sun rays is landing. 
         You found a dagger!
-        ~weapon = weapon+1
         You continue on the path and find yourself out of the forest, and into a charred battlefield.
         It looks to be devoid of animal life, and its dead silence confirms that nothing alive has made itself known here.
         *** Move Forward
@@ -56,9 +53,11 @@ You face a path, the right path seems to lead to a dark woods, while the left go
     ->ResultLeftCity
 *You look back in the cave.
     There is a small coin left behind inside. You pick it up.
-    ~gold = gold + 1
     You got 1 gold.
     There doesn't seem to be much else to the cave. The inside collapsed from when you left.
+    ~ gold += 1
+    ~ setGold(gold)
+    
 -> TheFirstPath
 
 = ResultRightBattlefield
