@@ -9,6 +9,7 @@ public class InkManager : MonoBehaviour
 {
     CharacterManager cm;
     GameManager gm;
+    string currentStory;
     void Start()
     {
         cm = GetComponent<CharacterManager>();
@@ -40,7 +41,7 @@ public class InkManager : MonoBehaviour
     {
         // Remove all the UI on screen
         RemoveChildren();
-
+        currentStory = "";
         // Read all the content until we can't continue any more
         while (story.canContinue)
         {
@@ -55,6 +56,40 @@ public class InkManager : MonoBehaviour
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
+            
+            for (int i = 0; i < story.currentChoices.Count; i++)
+            {
+                Choice choice = story.currentChoices[i];
+                Button button = CreateChoiceView(choice.text.Trim());
+                // Tell the button what to do when we press it
+                button.onClick.AddListener(delegate {
+                    OnClickChoiceButton(choice);
+                });
+            }
+        }
+        // If we've read all the content and there's no choices, the story is finished!
+        else
+        {
+            Button choice = CreateChoiceView("End of story.\nRestart?");
+            choice.onClick.AddListener(delegate {
+                StartStory();
+            });
+        }
+    }
+
+    void ReloadView()
+    {
+        // Remove all the UI on screen
+        RemoveChildren();
+
+
+        CreateContentView(currentStory);
+        
+
+        // Display all the choices, if there are any!
+        if (story.currentChoices.Count > 0)
+        {
+
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
@@ -87,6 +122,7 @@ public class InkManager : MonoBehaviour
     {
         Text storyText = Instantiate(textPrefab) as Text;
         storyText.text = text;
+        currentStory += text;
         storyText.transform.SetParent(canvas.transform, false);
     }
 
@@ -117,6 +153,35 @@ public class InkManager : MonoBehaviour
             GameObject.Destroy(canvas.transform.GetChild(i).gameObject);
         }
     }
+
+    public void SaveGame()
+    {
+        string savedJson = story.state.ToJson();
+
+        PlayerPrefs.SetString("inkSaveState", savedJson);
+
+        PlayerPrefs.SetString("inkSaveStory", currentStory);
+    }
+
+    public void LoadGame()
+    {
+        if (PlayerPrefs.HasKey("inkSaveState"))
+        {
+            var savedState = PlayerPrefs.GetString("inkSaveState");
+            story.state.LoadJson(savedState);
+            currentStory = PlayerPrefs.GetString("inkSaveStory");
+            ReloadView();
+
+        }
+
+    }
+
+   public void ClearGame()
+    {
+        PlayerPrefs.DeleteKey("inkSaveState");
+        story.ResetState();
+    }
+
 
     [SerializeField]
     private TextAsset inkJSONAsset;
