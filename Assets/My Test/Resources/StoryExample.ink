@@ -1,10 +1,11 @@
-EXTERNAL setGold(int x)
+//EXTERNAL setGold(int x)
 VAR gold = 0
 -> TheStart
+
 === TheStart
+
 The light ahead of the tunnel shines bright, looking forward causes your eyes to adjust
 -> TheFirstPath
-
 
 = TheFirstPath
 You face a path, the right path seems to lead to a dark woods, while the left goes into a rising hill.
@@ -72,3 +73,5 @@ Insert Fight Here
 = ResultLeftCity
 Insert Stuff Here
 -> DONE
+=== function setGold(x)===
+    ~ return true

@@ -1039,11 +1039,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Gold:
-
-    Weapons:
-
-    Skills:'
+  m_Text: "Gold: \nWeapons:\nSkills:"
 --- !u!222 &669588095
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1580,8 +1576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568bbb56e34e45245b83fe2be9e150a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldText: {fileID: 669588094}
   skillz: {fileID: 1414224520}
-  inkJSONAsset: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
+  inkJSONAsset: {fileID: 4900000, guid: 1d7ae25bbe73b364b95e0f3497400486, type: 3}
   canvas: {fileID: 337309620}
   textPrefab: {fileID: 11456674, guid: 1aab6ef84d87c416f8f0b3e1ef3d77d2, type: 3}
   buttonPrefab: {fileID: 11455116, guid: 37c108a6c38964f79a6621eccb33ddc1, type: 3}

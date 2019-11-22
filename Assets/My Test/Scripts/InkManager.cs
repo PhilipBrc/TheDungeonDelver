@@ -10,6 +10,7 @@ public class InkManager : MonoBehaviour
     CharacterManager cm;
     GameManager gm;
     string currentStory;
+    public Text goldText;
     static int stuff;
     public SkillManager skillz;
     void Start()
@@ -28,7 +29,7 @@ public class InkManager : MonoBehaviour
         story.BindExternalFunction("setGold", (int x) =>
          {
              skillz.setGold(x);
-             Debug.Log("Gold: "+skillz.getGold());
+             goldText.text = "Gold: " + x;
          });
         story.BindExternalFunction("place_actors", (string leftName, string rightName) =>
          {
